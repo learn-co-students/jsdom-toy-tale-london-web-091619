@@ -47,6 +47,12 @@
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
       "likes": -2
+    },
+    {
+      "name": "Tom White",
+      "image": "https://pbs.twimg.com/profile_images/860110727604056064/kdVYl8bJ_400x400.jpg",
+      "likes": 0,
+      "id": 9
     }
   ]
 }
