@@ -30,11 +30,8 @@ function injectToy(toy) {
       })
   })
 
-  div.appendChild(h2)
-  div.appendChild(img)
-  div.appendChild(p)
-  div.appendChild(button)
-  document.querySelector("#toy-collection").appendChild(div)
+  div.append(h2, img, p, button)
+  document.querySelector("#toy-collection").append(div)
 }
 
 function likeToy(toy) {
