@@ -30,6 +30,8 @@ document.addEventListener("DOMContentLoaded", ()=>{
     toys.forEach(function(toy){
       renderToy(toy)
 
+    
+
     })
   
 
@@ -50,23 +52,48 @@ document.addEventListener("DOMContentLoaded", ()=>{
 
    let toyLikes = document.createElement('p')
      toyLikes.innerHTML = toy.likes 
-     
+  
 
     let toyLikeButton = document.createElement('button')
      toyLikeButton.innerHTML = "Like"
      toyLikeButton.className = 'like-btn'
+     toyLikeButton.id = toy.id   //set the button id 
 
-    
-
-     
-     
+ 
 
 
    toyCollection.append(newDiv)
    newDiv.append(toyName,toyImg,toyLikes,toyLikeButton)
 
+   document.querySelector(`button[id= "${toy.id}"]`).addEventListener('click', likeToy)
+
   }
 
+    function likeToy(e){
+        
+        let toyLikesStr = e.target.parentElement.querySelector("p").innerText
+        let toyLikesInt = parseInt(toyLikesStr)
+      // debugger
+       let configurationObject ={
+         method: 'PATCH',
+         headers: {
+           "Content-Type": 'application/json',
+           "Accept": "application/json"
+         },
+         body: JSON.stringify({
+           "likes": toyLikesInt + 1
+         })
+       }
+        fetch(`http://localhost:3000/toys/${e.target.id}`, configurationObject)
+        .then(function(resp){
+        resp.json()
+        })
+        .then(function(toy){
+          e.target.parentElement.querySelector("p").innerText = toyLikesInt + 1 
+        })
+
+
+    }
  /// add new a new toy and persist to the server with fetch 
 
     newToyForm.addEventListener('submit', function(e){
@@ -80,7 +107,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
       postToys(toyData)
       .then(function(toy){
         renderToy(toy)
-        
+
       })
 
     })
@@ -107,9 +134,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
         return response.json()
       })
     }
-
     
-
    
 
 })
