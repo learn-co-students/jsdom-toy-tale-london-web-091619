@@ -40,7 +40,7 @@ function likeToy(toy) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      "Accept": "application/json"
     },
     body: JSON.stringify({ likes: toy.likes + 1 })
   }
@@ -57,7 +57,7 @@ function formSubmission(e) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json"
+      "Accept": "application/json"
     },
     body: JSON.stringify({ name: name, image: image, likes: 0 })
   }
