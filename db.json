@@ -4,19 +4,19 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 5
+      "likes": 14
     },
     {
       "id": 2,
       "name": "Buzz Lightyear",
       "image": "http://www.pngmart.com/files/6/Buzz-Lightyear-PNG-Transparent-Picture.png",
-      "likes": 8
+      "likes": 11
     },
     {
       "id": 3,
       "name": "Mr. Potato Head",
       "image": "https://vignette.wikia.nocookie.net/universe-of-smash-bros-lawl/images/d/d8/Mr-potato-head-toy-story.gif/revision/latest?cb=20151129131217",
-      "likes": 3
+      "likes": 4
     },
     {
       "id": 4,
@@ -46,7 +46,19 @@
       "id": 8,
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
-      "likes": -2
+      "likes": 1
+    },
+    {
+      "name": "Bunny",
+      "image": "https://cdn10.bigcommerce.com/s-mpz9h6/products/22642/images/39897/apiixiblj__01687.1559657055.1280.1280.jpg?c=2",
+      "id": 9,
+      "likes": 3
+    },
+    {
+      "name": "Angry Cnaray",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSv5PlQPGt9HyEdEYbXmyJPhfqU057dWmTqflQqfR5PFr4oGRxb",
+      "id": 11,
+      "likes": 2
     }
   ]
 }
