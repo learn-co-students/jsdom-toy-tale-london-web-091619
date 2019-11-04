@@ -51,19 +51,55 @@ function createToyElement(toy) {
   <img src="${toy.image}" class="toy-avatar" />
   <p>${toy.likes} Likes</p>
   <button class="like-btn" id="${toy.id}">Like ♥</button>
+  <button class="delete-btn" id="${toy.id}">Delete</button>
   `;
   const toyDisplay = document.getElementById('toy-collection');
   toyDisplay.appendChild(toyCard);
   // add event listener to button straight away to avoid likeButton=null due to rendering delays
   const likeButton = toyCard.querySelector('.like-btn');
-  likeButton.addEventListener('click', likeToys)
+  likeButton.addEventListener('click', likeToys);
+
+  const deleteButton = toyCard.querySelector('.delete-btn');
+  deleteButton.addEventListener('click', deleteToys);
 }
 
 function likeToys(e) {
-  const likeNumber = e.target.parentNode.querySelector('p').innerHTML; 
-  let likeInteger = parseInt(likeNumber);
-  likeInteger++;
-  e.target.parentNode.querySelector('p').innerHTML = `${likeInteger} Likes`;
+  const likedToy = {
+    likes: parseInt(e.target.parentNode.querySelector('p').innerText) + 1
+  }
+  updateToys(likedToy, e.target.id)
+  .then(function(toy) {
+    e.target.parentNode.querySelector('p').innerText = `${toy.likes} Likes`
+  })
+}
+
+function updateToys(likedToy, toyId) {
+  const configObject = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(likedToy)
+  }
+  return fetch(`${toysUri}/${toyId}`, configObject)
+  .then(function(response) {
+    return response.json()
+  })
+}
+
+function deleteToys(e) {
+  destroyToys(e)
+  .then(function(toy) {
+    e.target.parentElement.remove()
+  })
+}
+
+function destroyToys(e) {
+  return fetch(`${toysUri}/${e.target.id}`, {method: "DELETE"})
+  .then(function(response) {
+    return response.json()
+  })
 }
 
 function newToys() {
