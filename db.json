@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 19
+      "likes": 10
     },
     {
       "id": 2,
@@ -22,7 +22,7 @@
       "id": 4,
       "name": "Slinky Dog",
       "image": "https://www.freeiconspng.com/uploads/slinky-png-transparent-1.png",
-      "likes": 7
+      "likes": 5
     },
     {
       "id": 5,
@@ -51,14 +51,20 @@
     {
       "name": "Forky",
       "image": "https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/6101036512839?$pdpM$&fmt=webp&qlt=70",
-      "likes": 4,
+      "likes": 0,
       "id": 9
     },
     {
       "name": "Jessie",
       "image": "https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/6101036512836?$pdpM$&fmt=webp&qlt=70",
-      "likes": 0,
+      "likes": 1,
       "id": 10
+    },
+    {
+      "name": "Toy Story 4",
+      "image": "https://www.boxofficepro.com/wp-content/uploads/2019/06/toystory4-onesheet-775x970.png",
+      "likes": 1,
+      "id": 11
     }
   ]
 }
