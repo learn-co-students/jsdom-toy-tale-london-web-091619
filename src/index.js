@@ -37,7 +37,7 @@ function jsonFetch() {
 function jsonData() {
   jsonFetch()
   .then(function(toys) {
-    for (i = 0; i < toys.length; i++) {
+    for (let i = 0; i < toys.length; i++) {
       createToyElement(toys[i]);
     }
   })
@@ -45,7 +45,7 @@ function jsonData() {
 
 function createToyElement(toy) {
   const toyCard = document.createElement('div');
-  toyCard.classList.add('card');
+  toyCard.classList.add('card'); // not toyCard.className = "card", as a new value might delete previous set class names
   toyCard.innerHTML = `
   <h2>${toy.name}</h2>
   <img src="${toy.image}" class="toy-avatar" />
@@ -53,15 +53,25 @@ function createToyElement(toy) {
   <button class="like-btn" id="${toy.id}">Like ♥</button>
   `;
   const toyDisplay = document.getElementById('toy-collection');
-  toyDisplay.appendChild(toyCard)
+  toyDisplay.appendChild(toyCard);
+  // add event listener to button straight away to avoid likeButton=null due to rendering delays
+  const likeButton = toyCard.querySelector('.like-btn');
+  likeButton.addEventListener('click', likeToys)
+}
+
+function likeToys(e) {
+  const likeNumber = e.target.parentNode.querySelector('p').innerHTML; 
+  let likeInteger = parseInt(likeNumber);
+  likeInteger++;
+  e.target.parentNode.querySelector('p').innerHTML = `${likeInteger} Likes`;
 }
 
 function newToys() {
   toyForm.addEventListener('submit', function(e) {
     e.preventDefault()
     const newToy = {
-      name: document.querySelector('input[name="name"]').value,
-      image: document.querySelector('input[name="image"]').value,
+      name: e.target.querySelector('input[name="name"]').value,
+      image: e.target.querySelector('input[name="image"]').value,
       likes: 0
     }
     createToys(newToy)
@@ -86,14 +96,7 @@ function createToys(newToy) {
   })
 }
 
-function likeToy() {
-  document.addEventListener('click', function(e) {
-    const likeNumber = e.target.parentNode.querySelector('p').innerHTML; 
-    let likeInteger = parseInt(likeNumber);
-    likeInteger++;
-    e.target.parentNode.querySelector('p').innerHTML = `${likeInteger} Likes`;
-  })
-}
+
 
 
 
