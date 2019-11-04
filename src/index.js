@@ -1,6 +1,5 @@
 let addToy = false;
 const toysUri = 'http://localhost:3000/toys';
-const toyUri = 'http://localhost:3000/toys/:id';
 const addButton = document.querySelector('#new-toy-btn');
 const toyForm = document.querySelector('.add-toy-form');
 
