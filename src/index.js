@@ -99,44 +99,6 @@ renderToys()
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //   return fetch("http://localhost:3000/toys")
 //         .then(res => res.json())
 //         .then(function(toys){
