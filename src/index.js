@@ -12,5 +12,88 @@ document.addEventListener("DOMContentLoaded", ()=>{
       toyForm.style.display = 'none'
     }
   })
+const baseURI = "http://localhost:3000/toys"
 
+function fetchtoys(){
+  return fetch(baseURI)
+   .then(res => res.json())
+}
+
+function renderToys(){
+  fetchtoys()
+  .then(function(toys){
+    for(let i = 0; i < toys.length; i++){
+      renderToy(toys[i])
+    }
+  })
+}
+
+function renderToy(toy){
+  const card = document.createElement("div")
+  card.classList.add("card")
+  card.innerHTML = `
+  <h2>${toy.name}</h2>
+  <img src="${toy.image}" class="toy-avatar">
+  <p>${toy.likes}</p>
+  <button class="like-btn" id="${toy.id}">Like <3</button>
+  `
+  document.querySelector("#toy-collection").appendChild(card)
+  card.children[card.children.length - 1].addEventListener('click', increaseToyLikes)
+}
+
+document.querySelector(".add-toy-form").addEventListener("submit", function(e){
+  e.preventDefault()
+  const toyName = document.querySelector("input[name='name']").value
+  const toyImage = document.querySelector("input[name='image']").value
+  const newToy = {
+    name: toyName,
+    image: toyImage,
+    likes: 0
+  }
+  createToy(newToy)
+  .then(function(toy){
+    renderToy(toy)
+  })
+})
+
+function createToy(newToy){
+  const configurationObject = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(newToy)
+  }
+  return fetch(baseURI,configurationObject)
+  .then(res => res.json())
+}
+
+function increaseToyLikes(e) {
+  // Create the body of the request by accessing the liked toy's current likes and increasing them by one
+  const updatedToy = {
+    likes: parseInt(e.target.previousElementSibling.innerText) + 1
+  }
+  // Pass updateToy the body of the request and the id of the toy we want to update so that we can create the correct URL
+  updateToy(updatedToy, e.target.id)
+    // When the server responds with the updated toy, find the div for that toy and update its likes to be the newly increased like count of the updated toy
+    .then(function(toy){
+      e.target.previousElementSibling.innerText = toy.likes
+    })
+}
+
+function updateToy(updatedToy,toyId){
+  const configurationObject = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(updatedToy)
+  }
+  return fetch(`${baseURI}/${toyId}`, configurationObject)
+  .then(res => res.json())
+}
+
+renderToys()
 })
