@@ -97,3 +97,86 @@ function updateToy(updatedToy,toyId){
 
 renderToys()
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//   return fetch("http://localhost:3000/toys")
+//         .then(res => res.json())
+//         .then(function(toys){
+//           for(const toy of toys){
+//             const toyColl = document.getElementById('toy-collection')
+//             let cardDiv = document.createElement("div")
+//             let toyName = document.createElement("h2")
+//             let toyImage = document.createElement("img")
+//             let toyLikes = document.createElement("p")
+//             let likeButton = document.createElement("button")
+//
+//             cardDiv.className = "card"
+//             toyLikes.textContent = !toy.likes ? 0 + " likes" : `${toy.likes} likes`
+//             toyName.textContent = toy.name
+//             toyImage.src = toy.image
+//             toyImage.className = "toy-avatar"
+//             likeButton.className = "like-btn"
+//             likeButton.textContent = "Like <3"
+//
+//
+//             toyColl.appendChild(cardDiv);
+//             cardDiv.appendChild(toyName);
+//             cardDiv.appendChild(toyImage)
+//             cardDiv.appendChild(toyLikes)
+//             cardDiv.appendChild(likeButton)
+//           }
+//         })
+// })
+//
+// function submitToy(name,image){
+//   return fetch("http://localhost:3000/toys",{
+//     method:"POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Accept": "application/json"
+//     },
+//     body: JSON.stringify({
+//       "name": name,
+//       "image": image,
+//       "likes": 0
+//     })
+//   })
+// }
