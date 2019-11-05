@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 5
+      "likes": 10
     },
     {
       "id": 2,
@@ -46,6 +46,20 @@
       "id": 8,
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
+      "likes": -2
+    },
+    {
+      "name": "Ol' Yeller",
+      "image": "https://www.whatonearthcatalog.com/graphics/products/large/CX2372_A.jpg",
+      "submit": "Create New Toy",
+      "id": 9,
+      "likes": -2
+    },
+    {
+      "name": "Big Bojo Bohnson",
+      "image": "https://www.forsythandtedd.com/wp-content/uploads/2019/07/Boris_Standing_Front-min.jpg",
+      "submit": "Create New Toy",
+      "id": 10,
       "likes": -2
     }
   ]
