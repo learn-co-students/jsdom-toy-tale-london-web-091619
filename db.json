@@ -10,7 +10,7 @@
       "id": 2,
       "name": "Buzz Lightyear",
       "image": "http://www.pngmart.com/files/6/Buzz-Lightyear-PNG-Transparent-Picture.png",
-      "likes": 8
+      "likes": 10
     },
     {
       "id": 3,
@@ -63,7 +63,7 @@
     {
       "name": "Toy Story 4",
       "image": "https://www.boxofficepro.com/wp-content/uploads/2019/06/toystory4-onesheet-775x970.png",
-      "likes": 1,
+      "likes": 8,
       "id": 11
     }
   ]
