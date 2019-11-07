@@ -1,12 +1,31 @@
-document.addEventListener("DOMContentLoaded", ()=>{
-  
+document.addEventListener('DOMContentLoaded', function () {
+
   let addToy = false;
-  const toysUri = 'http://localhost:3000/toys';
-  const toyForm = document.querySelector('.add-toy-form');
-  
+  const toysUrl = 'http://localhost:3000/toys';
+
+  toysData();
   newFormDisplay();
-  jsonData();
-  newToys();
+
+
+  function fetchToys() {
+    return fetch(toysUrl)
+    .then(function(response) {
+      return response.json()
+    })
+  }
+
+  function toysData() {
+    fetchToys()
+    .then(function(toys) {
+      singleToy(toys)
+    })
+  }
+
+  function singleToy(toys) {
+    for (let i = 0; i < toys.length; i++) {
+      renderToys(toys[i])
+    }
+  }
 
   function newFormDisplay() {
     const addBtn = document.querySelector('#new-toy-btn')
@@ -20,120 +39,95 @@ document.addEventListener("DOMContentLoaded", ()=>{
         toyForm.style.display = 'none'
       }
     })
+    const createButton = document.querySelector('.add-toy-form')
+    createButton.addEventListener('submit', newToy)
+    // debugger
   }
-  
-  function jsonFetch() {
-    return fetch(toysUri)
-    .then(function(response) {
-      return response.json();
-    })
-  }
-  
-  function jsonData() {
-    jsonFetch()
-    .then(function(toys) {
-      for (let i = 0; i < toys.length; i++) {
-        createToyElement(toys[i]);
-      }
-    })
-  }
-  
-  function createToyElement(toy) {
-    const toyCard = document.createElement('div');
-    toyCard.classList.add('card'); // not toyCard.className = "card", as a new value might delete previous set class names
-    toyCard.innerHTML = `
+
+  function renderToys(toy) {
+    const toyDiv = document.createElement('div')
+    toyDiv.classList.add('card')
+    toyDiv.innerHTML = `
     <h2>${toy.name}</h2>
-    <img src="${toy.image}" class="toy-avatar" />
+    <img src="${toy.image}" class="toy-avatar"/>
     <p>${toy.likes} Likes</p>
-    <button class="like-btn" id="${toy.id}">Like ♥</button>
-    <button class="delete-btn" id="${toy.id}">Delete</button>
-    `;
-    const toyDisplay = document.getElementById('toy-collection');
-    toyDisplay.appendChild(toyCard);
-    // add event listener to button straight away to avoid likeButton=null due to rendering delays
-    const likeButton = toyCard.querySelector('.like-btn');
-    likeButton.addEventListener('click', likeToys);
-  
-    const deleteButton = toyCard.querySelector('.delete-btn');
-    deleteButton.addEventListener('click', deleteToys);
+    <button class="like-btn" data-toy-like-id="${toy.id}">Like ♥</button>
+    <button class="delete-btn" data-toy-delete-id="${toy.id}">Delete</button>
+    `
+    document.getElementById('toy-collection').appendChild(toyDiv)
+      
+    const likeButton = toyDiv.querySelector('.like-btn')
+    likeButton.addEventListener('click', updateToyLikes)
+
+    const deleteButton = toyDiv.querySelector('.delete-btn')
+    deleteButton.addEventListener('click', deleteToy)
   }
-  
-  function likeToys(e) {
-    const likedToy = {
-      likes: parseInt(e.target.parentNode.querySelector('p').innerText) + 1
+
+  function updateToyLikes(e) {
+    const toyId = e.target.dataset.toyLikeId
+    const likesCount = {
+      likes: parseInt(e.target.parentNode.querySelector('p').innerHTML) + 1
     }
-    updateToys(likedToy, e.target.id) // first talk to server
-    .then(function(toy) {             // then update DOM
-      e.target.parentNode.querySelector('p').innerText = `${toy.likes} Likes`
-    })
-  }
-  
-  function updateToys(likedToy, toyId) {  // server communication
-    const configObject = {
+    
+    const configObj = {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify(likedToy)
+      body: JSON.stringify(likesCount)
     }
-    return fetch(`${toysUri}/${toyId}`, configObject)
+
+    return fetch(`${toysUrl}/${toyId}`, configObj)
     .then(function(response) {
       return response.json()
     })
-  }
-  
-  function deleteToys(e) {
-    destroyToys(e)            // talk to the server in different function
-    .then(function(toy) {     // then update DOM
-      e.target.parentElement.remove()
+    .then(function(toy) {
+      e.target.parentNode.querySelector('p').innerHTML = `${toy.likes} Likes`
     })
   }
-  
-  function destroyToys(e) {              // server communication
-    return fetch(`${toysUri}/${e.target.id}`, {method: "DELETE"})
+
+  function deleteToy(e) {
+    const toyId = e.target.dataset.toyDeleteId
+    
+    const configObj = {
+      method: "DELETE"
+    }
+
+    return fetch(`${toysUrl}/${toyId}`, configObj)
     .then(function(response) {
       return response.json()
     })
-  }
-  
-  function newToys() {
-    toyForm.addEventListener('submit', function(e) {
-      e.preventDefault()
-      const newToy = {
-        name: e.target.querySelector('input[name="name"]').value,
-        image: e.target.querySelector('input[name="image"]').value,
-        likes: 0
-      }
-      createToys(newToy)   
-      .then(function(toy) {
-        createToyElement(toy)
-      })
+    .then(function(toy) {
+      e.target.parentNode.remove()
     })
   }
-  
-  function createToys(newToy) {
-    let configObject = {
+
+  function newToy(e) {
+    e.preventDefault()
+    const addedToy = {
+      name: e.target.parentNode.querySelector('input[name="name"]').value,
+      image: e.target.parentNode.querySelector('input[name="image"]').value,
+      likes: 0
+    }
+    
+    let configObj = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify(newToy)
+      body: JSON.stringify(addedToy)
     }
-    return fetch(toysUri, configObject)
-    .then(function(response){
+
+    return fetch(toysUrl, configObj)
+    .then(function(response) {
       return response.json()
+    })
+    .then(function(toy) {
+      renderToys(toy)
     })
   }
 
 })
-
-
-
-
-
-
-
-
 
