@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
   toysData();
   newFormDisplay();
 
-
   function fetchToys() {
     return fetch(toysUrl)
     .then(function(response) {
@@ -47,20 +46,33 @@ document.addEventListener('DOMContentLoaded', function () {
   function renderToys(toy) {
     const toyDiv = document.createElement('div')
     toyDiv.classList.add('card')
-    toyDiv.innerHTML = `
-    <h2>${toy.name}</h2>
-    <img src="${toy.image}" class="toy-avatar"/>
-    <p>${toy.likes} Likes</p>
-    <button class="like-btn" data-toy-like-id="${toy.id}">Like ♥</button>
-    <button class="delete-btn" data-toy-delete-id="${toy.id}">Delete</button>
-    `
+  
+    const hEl = document.createElement('h2');
+    hEl.innerText = toy.name;
+
+    const imgEl = document.createElement('img');
+    imgEl.src = toy.image;
+    imgEl.className = "toy-avatar";
+    
+    const pEl = document.createElement('p');
+    pEl.innerText = `${toy.likes} Likes`;
+
+    const likeEl = document.createElement('button');
+    likeEl.className = "like-btn";
+    likeEl.dataset.toyLikeId = toy.id;
+    likeEl.innerText = "Like ♥"
+
+    const delEl = document.createElement('button');
+    delEl.className = "delete-btn";
+    delEl.dataset.toyDeleteId = toy.id;
+    delEl.innerText = "Delete";
+
+    toyDiv.append( hEl, imgEl, pEl, likeEl, delEl)
     document.getElementById('toy-collection').appendChild(toyDiv)
       
-    const likeButton = toyDiv.querySelector('.like-btn')
-    likeButton.addEventListener('click', updateToyLikes)
+    likeEl.addEventListener('click', updateToyLikes)
 
-    const deleteButton = toyDiv.querySelector('.delete-btn')
-    deleteButton.addEventListener('click', deleteToy)
+    delEl.addEventListener('click', deleteToy)
   }
 
   function updateToyLikes(e) {
